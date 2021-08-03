@@ -10,15 +10,7 @@ const antIcon = <LoadingOutlined type="loading" style={{ fontSize: 24 }} spin />
 
 
 class NormalLoginForm extends React.Component {
-    handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                this.props.onAuth(values.userName, values.password);
-                this.props.history.push('/');
-            }
-        });
-    }
+
 
     render() {
         let errorMessage = null;
@@ -27,6 +19,11 @@ class NormalLoginForm extends React.Component {
                 <p>{this.props.error.message}</p>
             );
         }
+        const onFinish = (values) => {
+            console.log(values)
+            this.props.onAuth(values.userName, values.password);
+            this.props.history.push('/');
+        };
 
         // const { getFieldDecorator } = this.props.form;
         return (
@@ -39,9 +36,9 @@ class NormalLoginForm extends React.Component {
 
                         :
 
-                        <Form onSubmit={this.handleSubmit} className="login-form">
+                        <Form onFinish={onFinish} className="login-form">
 
-                            <FormItem name="username" rules={[{ required: true, message: 'Please input your username!' }]}>
+                            <FormItem name="userName" rules={[{ required: true, message: 'Please input your username!' }]}>
 
                                 <Input prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
 
@@ -60,7 +57,7 @@ class NormalLoginForm extends React.Component {
                                 Or
                                 <NavLink
                                     style={{ marginRight: '10px' }}
-                                    to='/signup/'> signup
+                                    to='/signup/'> Sign-Up
                                 </NavLink>
                             </FormItem>
                         </Form>
